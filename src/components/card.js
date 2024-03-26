@@ -1,6 +1,6 @@
-// @todo: Темплейт карточки
+// @done: Темплейт карточки
 const cardTemplate = document.querySelector('#card-template').content;
-// @todo: Функция создания карточки
+// @done: Функция создания карточки
 export function createCard(name, link, deleteCard, likeHandler) {
     const card = cardTemplate.querySelector('.card').cloneNode(true);
     const deleteButton = card.querySelector('.card__delete-button');
@@ -19,7 +19,7 @@ export function createCard(name, link, deleteCard, likeHandler) {
     return card;
   };
 
-// @todo: Функция удаления карточки
+// @done: Функция удаления карточки
 export function deleteCard(item) {
     item.remove();
 };
