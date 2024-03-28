@@ -25,3 +25,25 @@ openEditProfile.addEventListener('click', () => {
 openAddProfile.addEventListener('click', () => {
   openModal(addPopup);
 });
+
+//Форма редактирования профиля
+const formEditProfile = document.forms["edit-profile"];
+const nameInput = formEditProfile.elements.name;
+const descriptionInput = formEditProfile.elements.description;
+const profileTitle = document.querySelector('.profile__title');
+const profileDescription = document.querySelector('.profile__description');
+//Форма добавления карточки
+const formNewPlace = document.forms["new-place"];
+const placeNameInput = formNewPlace.elements["place-name"];
+const linkInput = formNewPlace.elements.link;
+
+// @done: Обработчик события submit
+function handleFormSubmit(evt) {
+  evt.preventDefault();
+  const name = nameInput.value;
+  const description = descriptionInput.value;
+  profileTitle.textContent = name;
+  profileDescription.textContent = description;
+}
+
+formEditProfile.addEventListener('submit', handleFormSubmit);

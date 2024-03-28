@@ -1,4 +1,5 @@
 const closeButtons = document.querySelectorAll('.popup__close');
+const saveButtons = document.querySelectorAll('.popup__button');
 
 // @done: Плавное открытие попапа
 export function openModal(popup) {
@@ -20,8 +21,16 @@ function closeModal(popup) {
     }, 600);
 };
 
-// @done: Закрываем попапа по клику(все крестики)
+// @done: Закрываем попап по клику(все крестики)
 closeButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const popup = button.closest('.popup');
+    closeModal(popup);
+  })
+});
+
+// @done: Сохраняем попап по клику на кнопку
+saveButtons.forEach((button) => {
   button.addEventListener('click', () => {
     const popup = button.closest('.popup');
     closeModal(popup);
