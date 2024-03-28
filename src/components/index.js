@@ -37,7 +37,7 @@ const formNewPlace = document.forms["new-place"];
 const placeNameInput = formNewPlace.elements["place-name"];
 const linkInput = formNewPlace.elements.link;
 
-// @done: Обработчик события submit
+// @done: Обработчик события submit для отображения имени в форме
 function handleFormSubmit(evt) {
   evt.preventDefault();
   const name = nameInput.value;
@@ -47,3 +47,15 @@ function handleFormSubmit(evt) {
 }
 
 formEditProfile.addEventListener('submit', handleFormSubmit);
+
+// @done: Обработчик события submit для формы добавления карточки
+function handleNewPlaceSubmit(evt) {
+  evt.preventDefault();
+  const name = placeNameInput.value;
+  const link = linkInput.value;
+  const newCard = createCard(name, link, deleteCard, likeHandler);
+  placesList.prepend(newCard);
+  formNewPlace.reset();
+};
+
+formNewPlace.addEventListener('submit', handleNewPlaceSubmit);
