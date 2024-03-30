@@ -1,41 +1,16 @@
-const closeButtons = document.querySelectorAll(".popup__close");
-const saveButtons = document.querySelectorAll(".popup__button");
-
 // @done: Плавное открытие попапа
 export function openModal(popup) {
-  popup.classList.add("popup_is-animated");
-  setTimeout(() => {
-    popup.classList.add("popup_is-opened");
-    document.addEventListener("keydown", closeModalEsc);
-    popup.addEventListener("mousedown", closeModalOverlay);
-  }, 10);
+  popup.classList.add("popup_is-opened");
+  document.addEventListener("keydown", closeModalEsc);
+  popup.addEventListener("mousedown", closeModalOverlay);
 }
 
 // @done: Плавное закрытие попапа
-function closeModal(popup) {
+export function closeModal(popup) {
   popup.classList.remove("popup_is-opened");
-  setTimeout(() => {
-    popup.classList.remove("popup_is-animated");
-    document.removeEventListener("keydown", closeModalEsc);
-    popup.removeEventListener("mousedown", closeModalOverlay);
-  }, 600);
+  document.removeEventListener("keydown", closeModalEsc);
+  popup.removeEventListener("mousedown", closeModalOverlay);
 }
-
-// @done: Закрываем попап по клику(все крестики)
-closeButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const popup = button.closest(".popup");
-    closeModal(popup);
-  });
-});
-
-// @done: Сохраняем попап по клику на кнопку
-saveButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const popup = button.closest(".popup");
-    closeModal(popup);
-  });
-});
 
 //@done: Функция закрытия попапа нажатием на Esc
 function closeModalEsc(evt) {

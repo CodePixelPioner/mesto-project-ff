@@ -1,22 +1,22 @@
 // @done: Темплейт карточки
 const cardTemplate = document.querySelector("#card-template").content;
 // @done: Функция создания карточки
-export function createCard(name, link, deleteCard, likeHandler, openCard, cardName) {
+export function createCard(name, link, deleteCard, likeHandler, openCard) {
   const card = cardTemplate.querySelector(".card").cloneNode(true);
   const deleteButton = card.querySelector(".card__delete-button");
   const likeButton = card.querySelector(".card__like-button");
-
+  const cardImage = card.querySelector(".card__image");
   //заполняем данные карточки
-  card.querySelector(".card__image").src = link;
+  cardImage.src = link;
+  cardImage.alt = name
   card.querySelector(".card__title").textContent = name;
 
   //обработчик лайка
   likeButton.addEventListener("click", likeHandler);
 
   //обработчик открытия картинки
-  const image = card.querySelector(".card__image");
-  image.addEventListener("click", function () {
-    openCard(image.src, cardName);
+  cardImage.addEventListener("click", function () {
+    openCard(cardImage.src, name);
   });
 
   //обработчик клика для удаления карточки колбэком
@@ -27,8 +27,8 @@ export function createCard(name, link, deleteCard, likeHandler, openCard, cardNa
 }
 
 // @done: Функция удаления карточки
-export function deleteCard(item) {
-  item.remove();
+export function deleteCard(cardElement) {
+  cardElement.remove();
 }
 
 // @done: Функция лайка
