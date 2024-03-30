@@ -26,7 +26,6 @@ const imageInPopup = imagePopup.querySelector(".popup__image");
 const imagePopupCaption = imagePopup.querySelector(".popup__caption");
 //Закрытие попапов
 const closeButtons = document.querySelectorAll(".popup__close");
-const saveButtons = document.querySelectorAll(".popup__button");
 
 // @done: Вывести карточки на страницу
 initialCards.forEach((item) => {
@@ -50,12 +49,12 @@ function handleNewPlaceSubmit(evt) {
   const link = linkInput.value;
   const newCard = createCard(name, link, deleteCard, likeHandler, openCard, name);
   cardsContainer.prepend(newCard);
-  closeModal(editPopup);
+  closeModal(addPopup);
   formNewPlace.reset();
 }
 
 // @done: Функция открытия попапа
-function openPopup() {
+function openEditProfilePopup() {
   nameInput.value = profileTitle.textContent;
   descriptionInput.value = profileDescription.textContent;
   openModal(editPopup);
@@ -72,21 +71,13 @@ function openCard(imageSrc, cardName) {
 // Обработчики
 formEditProfile.addEventListener("submit", handleEditProfileSubmit);
 formNewPlace.addEventListener("submit", handleNewPlaceSubmit);
-buttonOpenEditProfile.addEventListener("click", openPopup);
+buttonOpenEditProfile.addEventListener("click", openEditProfilePopup);
 buttonOpenAddCard.addEventListener("click", () => {
   openModal(addPopup);
 });
 
 // Обработчик закрытия попапов по клику на крестик
 closeButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const popup = button.closest(".popup");
-    closeModal(popup);
-  });
-});
-
-// Обработчик закрытия попапов по клику на кнопку сохранить
-saveButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const popup = button.closest(".popup");
     closeModal(popup);
