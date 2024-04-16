@@ -3,6 +3,16 @@ import "../pages/index.css";
 import { initialCards } from "./cards.js";
 import { createCard, deleteCard, likeHandler } from "./card.js";
 import { openModal, closeModal } from "./modal.js";
+import { hideInputError, enableValidation, toggleButtonState } from "./validation.js";
+
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'button_disabled',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__input-error_active'
+};
 
 // @done: DOM узлы
 const cardsContainer = document.querySelector(".places__list");
@@ -47,8 +57,9 @@ function handleNewPlaceSubmit(evt) {
   evt.preventDefault();
   const name = placeNameInput.value;
   const link = linkInput.value;
-  const newCard = createCard(name, link, deleteCard, likeHandler, openCard, name);
+  const newCard = createCard(name, link, deleteCard, likeHandler, openCard, validationConfig);
   cardsContainer.prepend(newCard);
+  clearValidation(formNewPlace, validationConfig);
   closeModal(addPopup);
   formNewPlace.reset();
 }
@@ -57,6 +68,7 @@ function handleNewPlaceSubmit(evt) {
 function openEditProfilePopup() {
   nameInput.value = profileTitle.textContent;
   descriptionInput.value = profileDescription.textContent;
+  clearValidation(formEditProfile, validationConfig);
   openModal(editPopup);
 }
 
@@ -68,11 +80,30 @@ function openCard(imageSrc, cardName) {
   imagePopupCaption.textContent = cardName;
 }
 
+//Очистка ошибки валидации формы
+function clearValidation(formElement, config) {
+  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
+  const errorElements = Array.from(formElement.querySelectorAll(config.errorClass));
+  const buttonElement = formElement.querySelector(config.submitButtonSelector);
+  inputList.forEach(inputElement => {
+    hideInputError(formElement, inputElement, config);
+  });
+  errorElements.forEach(errorElement => {
+    errorElement.textContent = '';
+  });
+  toggleButtonState(inputList, buttonElement, config);
+}
+
+
 // Обработчики
 formEditProfile.addEventListener("submit", handleEditProfileSubmit);
 formNewPlace.addEventListener("submit", handleNewPlaceSubmit);
-buttonOpenEditProfile.addEventListener("click", openEditProfilePopup);
+buttonOpenEditProfile.addEventListener("click", () => {
+  clearValidation(formEditProfile, validationConfig);
+  openEditProfilePopup();
+});
 buttonOpenAddCard.addEventListener("click", () => {
+  clearValidation(formNewPlace, validationConfig);
   openModal(addPopup);
 });
 
@@ -83,3 +114,5 @@ closeButtons.forEach((button) => {
     closeModal(popup);
   });
 });
+
+enableValidation(validationConfig);

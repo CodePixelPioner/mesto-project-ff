@@ -1,7 +1,7 @@
 // @done: Темплейт карточки
 const cardTemplate = document.querySelector("#card-template").content;
 // @done: Функция создания карточки
-export function createCard(name, link, deleteCard, likeHandler, openCard) {
+export function createCard(name, link, deleteCard, likeHandler, openCard, config) {
   const card = cardTemplate.querySelector(".card").cloneNode(true);
   const deleteButton = card.querySelector(".card__delete-button");
   const likeButton = card.querySelector(".card__like-button");
@@ -16,6 +16,7 @@ export function createCard(name, link, deleteCard, likeHandler, openCard) {
 
   //обработчик открытия картинки
   cardImage.addEventListener("click", function () {
+    resetValidationErrors(formNewPlace, config);
     openCard(cardImage.src, name);
   });
 
