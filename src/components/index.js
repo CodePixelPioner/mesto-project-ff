@@ -1,7 +1,7 @@
 import "../pages/index.css";
 import { cardTemplate, createCard, deleteCard, likeHandler } from "./card.js";
 import { openModal, closeModal } from "./modal.js";
-import { hideInputError, enableValidation, toggleButtonState } from "./validation.js";
+import {  enableValidation, clearValidation } from "./validation.js";
 import { getUserInfo, getCard, patchUserInfo, patchAvatar, postNewCard } from "./api.js";
 
 const validationConfig = {
@@ -72,7 +72,7 @@ function handleNewPlaceSubmit(evt) {
   const link = linkInput.value;
   postNewCard(name, link)
     .then((element) => {
-      const newCard = createCard(cardTemplate, element, deleteCard, likeHandler, openCard, userId, validationConfig);
+      const newCard = createCard(cardTemplate, element, deleteCard, likeHandler, openCard, userId);
       cardsContainer.prepend(newCard);
       clearValidation(formNewPlace, validationConfig);
       closeModal(addPopup);
@@ -117,24 +117,6 @@ function openCard(cardName, imageSrc) {
   imageInPopup.src = imageSrc;
   imageInPopup.alt = cardName;
   imagePopupCaption.textContent = cardName;
-}
-
-//Очистка ошибки валидации формы
-function clearValidation(formElement, config) {
-  const inputList = Array.from(
-    formElement.querySelectorAll(config.inputSelector)
-  );
-  const errorElements = Array.from(
-    formElement.querySelectorAll(config.errorClass)
-  );
-  const buttonElement = formElement.querySelector(config.submitButtonSelector);
-  inputList.forEach((inputElement) => {
-    hideInputError(formElement, inputElement, config);
-  });
-  errorElements.forEach((errorElement) => {
-    errorElement.textContent = "";
-  });
-  toggleButtonState(inputList, buttonElement, config);
 }
 
 //Пока ожидаем ответ сервера добавляес три точки

@@ -65,4 +65,22 @@ const toggleButtonState = (inputList, buttonElement, config) => {
   }
 };
 
-export { hideInputError, enableValidation, toggleButtonState };
+//Очистка ошибки валидации формы
+function clearValidation(formElement, config) {
+  const inputList = Array.from(
+    formElement.querySelectorAll(config.inputSelector)
+  );
+  const errorElements = Array.from(
+    formElement.querySelectorAll(config.errorClass)
+  );
+  const buttonElement = formElement.querySelector(config.submitButtonSelector);
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement, config);
+  });
+  errorElements.forEach((errorElement) => {
+    errorElement.textContent = "";
+  });
+  toggleButtonState(inputList, buttonElement, config);
+}
+
+export { enableValidation, clearValidation };
