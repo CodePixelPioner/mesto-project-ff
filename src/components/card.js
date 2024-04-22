@@ -42,13 +42,6 @@ function createCard(cardTemplate, data, deleteCard, likeHandler, openCard, userI
     openCard(data.name, data.link);
   });
 
-  if (data.owner._id === userId) {
-    deleteButton.addEventListener("click", (evt) =>
-      deleteCard(evt, dataCardID)
-    );
-  } else {
-    deleteButton.setAttribute("hidden", true);
-  }
   return card;
 }
 
